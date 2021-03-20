@@ -1,10 +1,11 @@
 const ExpressCassandra = require('express-cassandra');
 const fs = require('fs');
 const readline = require('readline');
-const addFeatures = require('./addFeatures')
-const addRelated = require('./addRelated')
-const addSkus = require('./addSkus')
-const addPhotos = require('./addPhotos')
+const addCreated = require('./addCreated');
+const addFeatures = require('./addFeatures');
+const addRelated = require('./addRelated');
+const addSkus = require('./addSkus');
+const addPhotos = require('./addPhotos');
 
 var models = ExpressCassandra.createClient({
   clientOptions: {
@@ -21,7 +22,7 @@ var models = ExpressCassandra.createClient({
     migration: 'safe',
   }
 });
-// subquery nested agg double join
+
 var ProductModel = models.loadSchema('Products', {
   fields: {
     product_id: {
@@ -130,10 +131,11 @@ var StyleModel = models.loadSchema('Styles', {
 //   ],
 });
 
+addCreated.init(models)
 // addFeatures.init(models)
 // addRelated.init(models)
 // addSkus.init(models)
-addPhotos.init(models)
+// addPhotos.init(models)
 
 
 ProductModel.syncDB(function(err, result) {

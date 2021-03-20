@@ -43,7 +43,7 @@ module.exports = {
           {return_query: true}
           )
           q.push(u)
-          if (q.length > 50) {
+          if (q.length > 1000) {
             lr.pause();
 
             models.doBatch(q, function(err){
