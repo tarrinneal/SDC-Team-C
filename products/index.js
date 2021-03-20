@@ -8,6 +8,15 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/products/:product_id', (req, res) => {
+  debugger;
+  db.getProduct(+req.params.product_id, (err, data) => {
+      debugger;
+      res.send(data)
+    })
+})
+
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
+
