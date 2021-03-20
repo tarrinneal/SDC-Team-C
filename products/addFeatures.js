@@ -43,13 +43,15 @@ module.exports = {
           {return_query: true}
           )
           q.push(u)
-          if (q.length > 1000) {
+          if (q.length > 250) {
             lr.pause();
-
+            // debugger;
             models.doBatch(q, function(err){
             if(err) {
+              // debugger;
               console.error(err)
             } else {
+              // debugger;
               console.log('added?', counter++)
               q = [];
               lr.resume();

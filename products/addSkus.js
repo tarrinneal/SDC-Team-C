@@ -39,7 +39,7 @@ const addF = (models, dict) => {
           {return_query: true}
           )
           q.push(u)
-          if (q.length > 1000) {
+          if (q.length > 250) {
             lr.pause();
 
 
