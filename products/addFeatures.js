@@ -32,7 +32,7 @@ module.exports = {
         header = !header
       } else {
 
-        let id = parseInt(row[1], 10)
+        let id = +row[1]
 
         let u = prod.update(
           {product_id: id},
