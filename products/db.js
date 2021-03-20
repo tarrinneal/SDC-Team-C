@@ -3,6 +3,8 @@ const fs = require('fs');
 const readline = require('readline');
 const addFeatures = require('./addFeatures')
 const addRelated = require('./addRelated')
+const addSkus = require('./addSkus')
+const addPhotos = require('./addPhotos')
 
 var models = ExpressCassandra.createClient({
   clientOptions: {
@@ -130,6 +132,8 @@ var StyleModel = models.loadSchema('Styles', {
 
 // addFeatures.init(models)
 // addRelated.init(models)
+// addSkus.init(models)
+addPhotos.init(models)
 
 
 ProductModel.syncDB(function(err, result) {
