@@ -127,11 +127,15 @@ var StyleModel = models.loadSchema('Styles', {
 
 
 const getProduct = (id, cb) => {
-  debugger;
   return models.instance.Products.findOne({product_id: id}, function(err, data){
-    console.log(data);
     cb(err, data)
-});
+  });
+}
+
+const getStyles = (id, cb) => {
+  return models.instance.Styles.find({product_id: id}, function(err, data){
+    cb(err, data)
+  });
 }
 
 
@@ -139,4 +143,5 @@ const getProduct = (id, cb) => {
 
 module.exports = {
   getProduct,
+  getStyles
 }
