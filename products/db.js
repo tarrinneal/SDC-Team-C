@@ -138,10 +138,43 @@ const getStyles = (id, cb) => {
   });
 }
 
+const getList = (page, count, cb) => {
+  page = +page || 1;
+  count = +count || 5;
+  let totalGet = page * count
+
+  const turnPage = (start = null) => {
+    limit = totalGet > 10000 ? 5000 : (totalGet - count === 0 ? count : totalGet - count)
+    const query = {
+      $limit: limit
+    }
+
+    if (start) {
+      query.product_id = {
+        '$token': {'$gt': start}
+      }
+    }
+    return models.instance.Products.find(
+      query,
+      function(err, data) {
+        if (totalGet <= 5000 ) {
+
+          cb(err, data)
+        } else {
+          totalGet -= limit
+          turnPage(data[count - 1].product_id)
+        }
+      }
+    )
+  }
+  turnPage()
+}
+
 
 //call dbSetup.js with models
 
 module.exports = {
   getProduct,
-  getStyles
+  getStyles,
+  getList
 }
