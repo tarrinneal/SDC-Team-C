@@ -41,8 +41,6 @@ const addF = (models, dict) => {
           q.push(u)
           if (q.length > 250) {
             lr.pause();
-
-
             models.doBatch(q, function(err){
             if(err) {
               console.error(err)
