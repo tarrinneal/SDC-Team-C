@@ -1,5 +1,5 @@
 const ExpressCassandra = require('express-cassandra');
-// const dbSetup = require('./dbSetup.js')
+// const addCreated = require('./expressFiles/addCreated.js')
 
 const models = ExpressCassandra.createClient({
   clientOptions: {
@@ -169,6 +169,8 @@ const getList = (page, count, cb) => {
   }
   turnPage()
 }
+
+//addCreated.init(models)
 
 ProductModel.syncDB(function(err, result) {
   if (err) throw err;

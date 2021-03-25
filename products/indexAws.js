@@ -11,38 +11,47 @@ app.get('/', (req, res) => {
 
 app.get('/products/:product_id', (req, res) => {
   db.getProduct(+req.params.product_id, (err, data) => {
-
-    let { product_id, name, slogan, description, category, default_price, created_at, updated_at, features, feature_values } = data;
-    let response = {
-      product_id,
-      name,
-      slogan,
-      description,
-      category,
-      default_price,
-      created_at,
-      updated_at,
+    if (err) {
+      res.status(501).end()
+    } else {
+      let { product_id, name, slogan, description, category, default_price, created_at, updated_at, features, feature_values } = data;
+      let response = {
+        product_id,
+        name,
+        slogan,
+        description,
+        category,
+        default_price,
+        created_at,
+        updated_at,
+      }
+      let featuresArr = [];
+      for (let i = 0; i < features.length; i++) {
+        featuresArr.push({
+          feature: features[i],
+          value: feature_values[i] || null
+        })
+      }
+      response.features = featuresArr;
+      res.send(response)
     }
-    let featuresArr = [];
-    for (let i = 0; i < features.length; i++) {
-      featuresArr.push({
-        feature: features[i],
-        value: feature_values[i] || null
-      })
-    }
-    response.features = featuresArr;
-    res.send(response)
   })
 })
 
 app.get('/products/:product_id/related', (req, res) => {
   db.getProduct(+req.params.product_id, (err, data) => {
+    if (err) {
+      res.status(501).end()
+    }
     res.send(data.related_products)
   })
 })
 
 app.get('/products/:product_id/styles', (req, res) => {
   db.getStyles(+req.params.product_id, (err, data) => {
+    if (err) {
+      res.status(501).end()
+    }
     let response = [];
     data.forEach(style => {
       currStyle = {
@@ -116,9 +125,13 @@ app.get('/products', (req, res) => {
       })
       res.send(response)
     }
-    res.end('no data for that query')
+    res.end()
   })
 })
+
+app.get('/loaderio-d81118142c1c35e79dc6de513034a18e', (req, res) => {
+res.send('loaderio-d81118142c1c35e79dc6de513034a18e')
+  })
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

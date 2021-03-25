@@ -1,6 +1,7 @@
 const ExpressCassandra = require('express-cassandra');
 const fs = require('fs');
 var LineByLineReader = require('line-by-line');
+const addFeatures = require('./addFeatures.js')
 
 
 
@@ -12,9 +13,8 @@ module.exports = {
 
     let header = false;
     let q = [];
-    let counter = 0;
 
-    lr = new LineByLineReader('/home/bargle/hackreactor/SDC-Team-C/products/product.csv');
+    lr = new LineByLineReader('/home/ubuntu/express/expressFiles/product.csv');
 
     lr.on('line', function (line) {
       let row = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
@@ -41,7 +41,7 @@ module.exports = {
             if(err) {
               console.error(err)
             } else {
-              console.log('added?', counter++)
+
               q = [];
               lr.resume();
             }
@@ -55,8 +55,9 @@ module.exports = {
         if(err) {
           console.error(err)
         } else {
-              console.log('complete', counter++)
+          console.log('completed created')
           q = [];
+          addFeatures.init(models)
         }
       })
     })
